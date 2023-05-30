@@ -1,7 +1,13 @@
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+import {
+    OrbitControls
+} from 'three/examples/jsm/controls/OrbitControls.js'
+import {
+    FontLoader
+} from 'three/examples/jsm/loaders/FontLoader.js'
+import {
+    TextGeometry
+} from 'three/examples/jsm/geometries/TextGeometry.js'
 import * as dat from 'lil-gui'
 
 /**
@@ -19,12 +25,11 @@ const scene = new THREE.Scene()
 
 /**
  * Textures
- */
 const textureLoader = new THREE.TextureLoader()
 const matcapTexture = textureLoader.load('textures/matcaps/8.png')
 
 // Material
-const material = new THREE.MeshMatcapMaterial({ matcap: matcapTexture })
+    matcap: matcapTexture
 material.wireframe = false
 material.matcap = matcapTexture
 
@@ -32,103 +37,100 @@ material.matcap = matcapTexture
  * 3D Text
  */
 const textLoader = new FontLoader()
-textLoader.load
-(
+textLoader.load(
     '/fonts/helvetiker_regular.typeface.json',
     //'/node_modules/three/examples/fonts/optimer_regular.typeface.json',
-    (font) =>
-    {
-    // Text
-    const textString = 'Donuts'
-    const textGeometry = new TextGeometry (
-        textString,
-        {
-            font: font,
-            size: 5,
-            height: 2,
-            curveSegments: 8,
-            bevelThickness: 0.03,
-            bevelSize: 0.02,
-            bevelOffset: 0,
-            bevelSegments: 4,
-            bevelEnabled: true
-        }
-    )
-
-    textGeometry.center()
-    const text = new THREE.Mesh(textGeometry, material)
-
-
-    // Parent textGeometry Instantiation for Redraw
-    const textParent = new THREE.Object3D()
-    textParent.add(text)
-    scene.add(textParent)
-    const options = textGeometry.parameters.options
-    const textGeometryProperties = {
-        font: options.font,
-        size: options.size,
-        height: options.height,
-        curveSegments: options.curveSegments,
-        bevelEnabled: options.bevelEnabled,
-        bevelOffset: options.bevelOffset,
-        bevelThickness: options.bevelThickness,
-        bevelSize: options.bevelSize,
-        bevelSegments: options.bevelSegments
-    }
-
-    // GUI for textGeometry
-    const textPropertiesFolder = gui.addFolder('Text Properties')
-    textPropertiesFolder
-        .add(textGeometryProperties, 'size', 1, 30)
-        .step(0.1)
-        .onChange(redrawTextGeometry)
-        .onFinishChange(() => console.dir(text.geometry))
-    textPropertiesFolder
-        .add(textGeometryProperties, 'height', 0, 30)
-        .step(0.1)
-        .onChange(redrawTextGeometry)
-    textPropertiesFolder
-        .add(textGeometryProperties, 'curveSegments', 1, 30)
-        .step(1)
-        .onChange(redrawTextGeometry)
-    textPropertiesFolder
-        .add(textGeometryProperties, 'bevelEnabled')
-        .onChange(redrawTextGeometry)
-    textPropertiesFolder
-        .add(textGeometryProperties, 'bevelOffset', 0, 1)
-        .onChange(redrawTextGeometry)
-    textPropertiesFolder
-        .add(textGeometryProperties, 'bevelThickness', 0, 3)
-        .onChange(redrawTextGeometry)
-    textPropertiesFolder
-        .add(textGeometryProperties, 'bevelSize', 0, 3)
-        .onChange(redrawTextGeometry)
-    textPropertiesFolder
-        .add(textGeometryProperties, 'bevelSegments', 1, 8).step(1)
-        .onChange(redrawTextGeometry)
-    textPropertiesFolder.open()
-
-    // Redraw the textGeometry
-    function redrawTextGeometry() {
-        let newGeometry = new TextGeometry (
+    (font) => {
+        // Text
+        const textString = 'Donuts'
+        const textGeometry = new TextGeometry(
             textString, {
-                font: textGeometryProperties.font,
-                size: textGeometryProperties.size,
-                height: textGeometryProperties.height,
-                curveSegments: textGeometryProperties.curveSegments,
-                bevelEnabled: textGeometryProperties.bevelEnabled,
-                bevelOffset: textGeometryProperties.bevelOffset,
-                bevelThickness: textGeometryProperties.bevelThickness,
-                bevelSize: textGeometryProperties.bevelSize,
-                bevelSegments: textGeometryProperties.bevelSegments
+                font: font,
+                size: 5,
+                height: 2,
+                curveSegments: 8,
+                bevelThickness: 0.03,
+                bevelSize: 0.02,
+                bevelOffset: 0,
+                bevelSegments: 4,
+                bevelEnabled: true
             }
         )
-        text.geometry.dispose()
-        text.geometry = newGeometry
-        text.geometry.parameters.options.depth = 0.2
 
-        newGeometry.center()
-        console.log('textGeometry:',text.geometry.parameters.options)
+        textGeometry.center()
+        const text = new THREE.Mesh(textGeometry, material)
+
+
+        // Parent textGeometry Instantiation for Redraw
+        const textParent = new THREE.Object3D()
+        textParent.add(text)
+        scene.add(textParent)
+        const options = textGeometry.parameters.options
+        const textGeometryProperties = {
+            font: options.font,
+            size: options.size,
+            height: options.height,
+            curveSegments: options.curveSegments,
+            bevelEnabled: options.bevelEnabled,
+            bevelOffset: options.bevelOffset,
+            bevelThickness: options.bevelThickness,
+            bevelSize: options.bevelSize,
+            bevelSegments: options.bevelSegments
+        }
+
+        // GUI for textGeometry
+        const textPropertiesFolder = gui.addFolder('Text Properties')
+        textPropertiesFolder
+            .add(textGeometryProperties, 'size', 1, 30)
+            .step(0.1)
+            .onChange(redrawTextGeometry)
+            .onFinishChange(() => console.dir(text.geometry))
+        textPropertiesFolder
+            .add(textGeometryProperties, 'height', 0, 30)
+            .step(0.1)
+            .onChange(redrawTextGeometry)
+        textPropertiesFolder
+            .add(textGeometryProperties, 'curveSegments', 1, 30)
+            .step(1)
+            .onChange(redrawTextGeometry)
+        textPropertiesFolder
+            .add(textGeometryProperties, 'bevelEnabled')
+            .onChange(redrawTextGeometry)
+        textPropertiesFolder
+            .add(textGeometryProperties, 'bevelOffset', 0, 1)
+            .onChange(redrawTextGeometry)
+        textPropertiesFolder
+            .add(textGeometryProperties, 'bevelThickness', 0, 3)
+            .onChange(redrawTextGeometry)
+        textPropertiesFolder
+            .add(textGeometryProperties, 'bevelSize', 0, 3)
+            .onChange(redrawTextGeometry)
+        textPropertiesFolder
+            .add(textGeometryProperties, 'bevelSegments', 1, 8).step(1)
+            .onChange(redrawTextGeometry)
+        textPropertiesFolder.open()
+
+        // Redraw the textGeometry
+        function redrawTextGeometry() {
+            let newGeometry = new TextGeometry(
+                textString, {
+                    font: textGeometryProperties.font,
+                    size: textGeometryProperties.size,
+                    height: textGeometryProperties.height,
+                    curveSegments: textGeometryProperties.curveSegments,
+                    bevelEnabled: textGeometryProperties.bevelEnabled,
+                    bevelOffset: textGeometryProperties.bevelOffset,
+                    bevelThickness: textGeometryProperties.bevelThickness,
+                    bevelSize: textGeometryProperties.bevelSize,
+                    bevelSegments: textGeometryProperties.bevelSegments
+                }
+            )
+            text.geometry.dispose()
+            text.geometry = newGeometry
+            text.geometry.parameters.options.depth = 0.2
+
+            newGeometry.center()
+            console.log('textGeometry:', text.geometry.parameters.options)
 
         }
     }
@@ -142,7 +144,9 @@ const scaleGenerator = (min, max, decimalPoints) => {
 function donutGenerator() {
 
     const donutGeometry = new THREE.TorusGeometry(0.3, 0.2, 32, 64)
-    const donutCount = { count: 50 }
+    const donutCount = {
+        count: 50
+    }
 
     for (let i = 0; i < donutCount.count; i++) {
 
@@ -161,9 +165,7 @@ function donutGenerator() {
         donut.scale.set(scale, scale, scale)
 
         scene.add(donut)
-
     }
-
 }
 
 // function parentDonutGenerator() {
@@ -195,14 +197,12 @@ console.timeEnd('donuts load time')
 /**
  * Sizes
  */
-const sizes =
-{
+const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -244,8 +244,7 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
  */
 const clock = new THREE.Clock()
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
 
     // Update controls
