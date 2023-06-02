@@ -3,3 +3,6 @@
 /src/*.kate-swp
 /static/*.kate-swp
 /node_modules/*.kate-swp
+
+# Deployment
+/dist
