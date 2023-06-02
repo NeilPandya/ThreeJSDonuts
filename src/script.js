@@ -24,12 +24,15 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
- * Textures
+ *Textures
+**/
 const textureLoader = new THREE.TextureLoader()
 const matcapTexture = textureLoader.load('textures/matcaps/8.png')
 
 // Material
+const material = new THREE.MeshMatcapMaterial({
     matcap: matcapTexture
+})
 material.wireframe = false
 material.matcap = matcapTexture
 
@@ -168,31 +171,9 @@ function donutGenerator() {
     }
 }
 
-// function parentDonutGenerator() {
-//
-//     const parentDonutGeometry = new THREE.Object3D()
-//     parentDonutGeometry.add(donutGenerator.donut)
-//     scene.add(parentDonutGeometry)
-// }
-
 console.time('donuts load time')
 donutGenerator()
-//parentDonutGenerator()
 console.timeEnd('donuts load time')
-
-// GUI for donutGenerator
-// const donutPropertiesFolder = gui.addFolder('Donut Properties')
-// donutPropertiesFolder
-//     .add(donutGenerator.scaleGenerator, 'min', 0.1, 0.5)
-//     .step(donutGenerator.scaleGenerator.decimalPoints)
-// donutPropertiesFolder
-//     .add(donutGenerator.scaleGenerator, 'max', 0.5, 7.5)
-//     .step(donutGenerator.scaleGenerator.decimalPoints)
-// donutPropertiesFolder
-//     .add(donutGenerator.scaleGenerator, 'decimalPoints', 1, 5)
-//     .step(1)
-
-// donutPropertiesFolder.open()
 
 /**
  * Sizes
