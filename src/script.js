@@ -111,7 +111,7 @@ textLoader.load(
         textPropertiesFolder
             .add(textGeometryProperties, 'bevelSegments', 1, 8).step(1)
             .onChange(redrawTextGeometry)
-        textPropertiesFolder.open()
+        textPropertiesFolder.close()
 
         // Redraw the textGeometry
         function redrawTextGeometry() {
